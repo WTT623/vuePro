@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="" alt="" id="img1">
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        fetch("./package.json").then((res) => {
+            res.json().then((data) => {
+                console.log(data);
+            }).catch((e) => {
+                console.log(e);
+            });
+        });
+        fetch("1.png").then((res) => {
+            res.blob().then((data) => {
+                img1.src = URL.createObjectURL(data);
+            })
+        })
+    </script>
+</body>
+
+</html>

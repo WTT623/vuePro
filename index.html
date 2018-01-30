@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- moustache 模板引擎 表达式 赋值取值 三元 -->
+        {{message}}
+        <!-- 表单元素视图影响数据  通过vue的指令 directive DOM上的行间属性 vue给了一定的意义 -->
+        <input type="text" v-model="val">
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        //?  viewmodel     
+        let vm = new Vue({
+            el: "#app",  //* 规定vue作用的html范围  querySelector
+            data: {  //* data中的数据会被vm代理
+                message: 'hello world!',   //? 使用Object.defineProperty()
+                val: 'input'
+            }
+        })
+
+    </script>
+</body>
+
+</html>

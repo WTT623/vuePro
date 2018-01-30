@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in fruit">
+                {{item.name}}
+                <ul>
+                    <li v-for="(c,cIndex) in item.color">{{c}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                fruit:[{name:"apple",color:["red","green"]},{name:"banana",color:["red","green"]},{name:"orange",color:["red","green"]}],
+            },
+            method:{
+                fn(){}
+            }
+        })      
+    </script>
+</body>
+</html>
