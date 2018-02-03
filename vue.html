@@ -10,35 +10,57 @@
 
 <body>
     <div id="app">
-        <input type="checkbox" @change="fn" v-model="c" value="1">
-        <input type="checkbox" @change="fn" v-model="c" value="2">
-        <input type="checkbox" @change="fn" v-model="c" value="3">
-        <input type="checkbox" @change="fn" v-model="c" value="4">
-        <input type="checkbox" @change="change" v-model="d" > {{c}}
+        <input type="checkbox" @change="fn" v-model="c">
+        <input type="checkbox" @change="fn" v-model="c">
+        <input type="checkbox" @change="fn" v-model="c">
+        <input type="checkbox" @change="fn" v-model="c">
+        <input type="checkbox" @change="change" v-model="d"> {{c}}
     </div>
     <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <!-- <script src="./ajaxpromise.js"></script> -->
     <script>
         let vm = new Vue({
             el: "#app",
+            created() {  //数据初始化完成后调用
+                axios("./package.json").then((res) => {
+                    this.package = res.data;
+                })
+            },
+            computed: {
+                //  默认v-model会调取 checkAll的值
+                checkAll: {
+                    get() {
+                        return this.c.every(item => item)
+                    },
+                    set(val) {
+                        this.c = this.c.map(item => val)
+                    }
+                }
+            },
             data: {
                 c: [],
                 d: false,
+                package: {}
             },
             methods: {
                 fn() {
-                    if (this.c.length == 4) {
-                        this.d=true;
-                    }
-                    if (this.c.length<4) {
-                        this.d=false;
-                    }
+                    this.d = this.c.every(item => item);
+                    // if (this.c.length == 4) {
+                    //     this.d=true;
+                    // }
+                    // if (this.c.length<4) {
+                    //     this.d=false;
+                    // }
                 },
                 change() {
-                    if (this.d==true) {
-                        this.c = [1,2,3,4];
-                    }else{
-                        this.c = []
-                    }
+                    // if (this.d==true) {
+                    //     this.c = [1,2,3,4];
+                    // }else{
+                    //     this.c = []
+                    // }
+                    this.c = this.c.map(item => this.d)
+                    console.log(this.c);
                 }
             }
         })

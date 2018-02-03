@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VUE</title>
 </head>
+
 <body>
+    <div onclick="fn(e,1,m)">123132</div>
     <div id="app">
         <p @click="getData">1</p>
     </div>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/axios/dist/axios.js"></script>
+    <script src="./zepto.min.js"></script>
     <script>
         let vm = new Vue({
             el: "#app",
+            created() {
+                this.getData();
+                //实例创建完立即调用
+            },
             data: {
-                a:{}
+                a: {}
             },
             methods: {
-                getData(){
-                    axios("./package.json").then((a) => {
-                        this.a = a.data;
-                    })
+                getData() {
+
                 }
             }
         })
+        let b;
+        axios("./package.json").then((a) => {
+            b = a.data;
+            console.log(b);
+        })
     </script>
 </body>
+
 </html>
