@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        tr,
+        td {
+            text-align: center;
+        }
+    </style>
+    <title>VUE</title>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="row">
+            <table class="table-bordered table table-striped">
+                <caption style="caption-side:top" class="h2 text-danger">购物车</caption>
+                <tr>
+                    <th>商品名称</th>
+                    <th>商品价格</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="(item,index) in carList">
+                    <td>{{item.name}}</td>
+                    <td>{{item.price|addUnit("$")}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" @click="removeOne(item)">delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button class="btn btn-primary" @click="removeAll" v-show="this.carList.length">deleteAll</button>
+                    </td>
+                </tr>
+            </table>
+            <form>
+                <div class="form-group row">
+                    <label for="shopname" class="col-md-4 control-label">商品名:</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" v-model="shopname" id="shopname">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="control-label col-md-4">商品价格:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="number" v-model="shopprice" id="name">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg" @click.prevent="add">提交</button>
+                <button type="reset" class="btn btn-danger btn-lg">重置</button>
+            </form>
+        </div>
+
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            created() {
+            },
+            data: {
+                carList: [{ name: 'book', price: 59, }, { name: 'phone', price: 599, }, { name: 'computer', price: 999, }],
+                shopname: "",
+                shopprice: "",
+            },
+            methods: {
+                removeOne(shop) {
+                    this.carList = this.carList.filter((item) => {
+                        return item !== shop;
+                    })
+                },
+                removeAll() {
+                    console.log(1);
+                    this.carList = [];
+                },
+                add() {
+                    if (this.shopname && this.shopprice) {
+                        let obj = {};
+                        obj.name = this.shopname;
+                        obj.price = this.shopprice;
+                        this.carList.push(obj);
+                        this.shopname = "";
+                        this.shopprice = "";
+                    } else {
+                        alert("信息不全");
+                    }
+                }
+            },
+            computed: {
+                // isEmpty() {
+                //     return this.carList.length;
+                // }
+            },
+            filters: {
+                addUnit(val, unit) {
+                    if (!isNaN(val)) {
+                        return unit + val;
+                    }
+                    return val;
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

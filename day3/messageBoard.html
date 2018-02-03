@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        ul {
+            margin-top: 20px;
+        }
+    </style>
+    <title>VUE</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="col-md-6">
+                <h2 class="h2 text-primary">留言板</h2>
+                <form action="">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" class="form-control" name="" v-model="title" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">留言内容</label>
+                        <textarea type="text" v-model="content" name="" class="form-control" id="content"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default" @click.prevent="postMessage">提交</button>
+                </form>
+                <ul class="list-group">
+                    <h4 class="h4 text-success">所有留言</h3>
+                        <li class="list-group-item" v-for="(item,index) in message">
+                            <p>
+                                <strong>标题:</strong> {{item.title}}</p>
+                            <p>
+                                <strong>留言内容:</strong> {{item.content}}</p>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            created() {
+                this.getData();
+            },
+            data: {
+                message: [],
+                title: "",
+                content: ""
+            },
+            methods: {
+                getData() {
+                    axios('/getMessage').then((res) => {
+                        this.message = res.data;
+                    })
+                },
+                postMessage() {
+                    if (this.title && this.content) {
+                        // axios   post传过去的是json字符串
+                        axios.post('/postMessage', { title: this.title, content: this.content }).then((res) => {
+                            console.log(res);
+                            this.title = "";
+                            this.content = "";
+                            this.message = res.data;
+                        })
+                    }else{
+                        alert("请填写内容")
+                    }
+                }
+            },
+            computed: {
+            },
+            filters: {
+            },
+        })
+    </script>
+</body>
+
+</html>

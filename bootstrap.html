@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>VUE</title>
+</head>
+<body>
+    <div id="app">
+        <!-- bootstrap 栅格化布局 默认12列 -->
+        <!-- 常见样式+增强样式 -->
+        <table>
+            <tr>
+                <th>全部</th>
+                <td>商品</td>
+                <td>单价</td>
+                <td>数量</td>
+                <td>总价</td>
+            </tr>
+        </table>
+    </div>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+            },
+            methods: {
+            }
+        })
+    </script>
+</body>
+</html>

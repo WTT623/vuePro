@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VUE</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="checkbox" v-model="allcheck">{{allcheck}}
+        <input type="checkbox" v-model="arr" value="A">A
+        <input type="checkbox" v-model="arr" value="B">B
+        <input type="checkbox" v-model="arr" value="C">C
+        <input type="checkbox" v-model="arr" value="D">D
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            created() {
+            },
+            data: {
+                all: false,
+                arr: [],
+            },
+            methods: {
+            },
+            computed: {
+                //!  写成函数的形式则默认为get属性 或者对象只写get
+                allcheck: {
+                    get() {//只要是依赖的值有了变化就会重新计算获得新的值
+                        return this.arr.length == 4;
+                    },
+                    set(val) {
+                        if (val) {
+                            this.arr = ["A", "B", "C", "D"];
+                        } else {
+                            this.arr = [];
+                        }
+                    }
+                },
+            },
+            filters: {
+            },
+        })
+    </script>
+</body>
+
+</html>

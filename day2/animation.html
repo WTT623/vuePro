@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.css">
+    <style>
+        .hhe {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+    <title>VUE</title>
+</head>
+
+<body>
+    <div id="app">
+        <transition-group tag="" name="">
+            <div class="hhe" v-for="(item,index) in c" :key="item">{{item}}</div>
+        </transition-group>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            created() {
+            },
+            data: {
+                c: [1, 2, 3, 4],
+                show: true,
+            },
+            methods: {
+            },
+            computed: {
+            },
+            filters: {
+            },
+        })
+    </script>
+</body>
+
+</html>

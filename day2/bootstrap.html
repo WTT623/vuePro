@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>VUE</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover table-bordered">
+                    <caption class="h2 text-center text-warning" style="caption-side:top">购物车</caption>
+                    <tr>
+                        <th>
+                            全选
+                            <input type="checkbox" v-model="checkAll">
+                        </th>
+                        <td>商品</td>
+                        <td>单价</td>
+                        <td>数量</td>
+                        <td>小计</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr v-for="(item,index) in products">
+                        <th>
+                            <input type="checkbox" v-model="item.isSelected">
+                        </th>
+                        <td>
+                            <img :src="item.productCover" :alt="item.productInfo"> {{item.productName}}
+                        </td>
+                        <td>{{item.productPrice}}</td>
+                        <td>
+                            <input type="number" v-model="item.productCount" min="1">
+                        </td>
+                        <td>{{item.productPrice*item.productCount | toFixed(2)}}</td>
+                        <td>
+                            <button class="btn btn-danger" @click="remove(index)">delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">总计: {{sum | toFixed(1)}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            created() {
+                this.getData();
+            },
+            data: {
+                products: [],
+            },
+            methods: {
+                getData() {
+                    axios('./carts.json').then((res) => {
+                        this.products = res.data;
+                    })
+                },
+                remove(index) {
+                    this.products = this.products.filter((item) => {
+                        return item !== this.products[index];
+                    })
+                }
+            },
+            computed: {
+                checkAll: {
+                    get() {
+                        return this.products.every((item) => {
+                            return item.isSelected;
+                        })
+                    },
+                    set(val) {
+                        this.products.forEach((item) => {
+                            item.isSelected = val;
+                        })
+                    }
+                },
+                sum: {
+                    get() {
+                        return this.products.reduce((prev, cur) => {
+                            if (!cur.isSelected) {
+                                return prev;
+                            }
+                            return prev + cur.productCount * cur.productPrice;
+                        }, 0)
+                    }
+                }
+            },
+            filters: {
+                toFixed(val, n) {
+                    return " $" + val.toFixed(n);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
